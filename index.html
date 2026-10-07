@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#050505">
+    <meta name="description" content="Social links">
+
+    <title>socialmedia.site/quattro</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --red: #e50914;
+            --border: rgba(255,255,255,.09);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            font-family: "Inter", sans-serif;
+            color: #fff;
+            background: var(--bg);
+        }
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(229,9,20,.16),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 10% 80%,
+                    rgba(229,9,20,.05),
+                    transparent 30%
+                ),
+                var(--bg);
+        }
+
+        .grid {
+            position: absolute;
+            inset: -50%;
+            opacity: .4;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.035) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            transform:
+                perspective(500px)
+                rotateX(58deg)
+                translateY(-10%);
+
+            transform-origin: center top;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    #000,
+                    transparent 75%
+                );
+
+            -webkit-mask-image:
+                linear-gradient(
+                    to bottom,
+                    #000,
+                    transparent 75%
+                );
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: .45;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .orb-one {
+            width: 240px;
+            height: 240px;
+            top: 8%;
+            left: -120px;
+            background: rgba(229,9,20,.1);
+        }
+
+        .orb-two {
+            width: 180px;
+            height: 180px;
+            top: 40%;
+            right: -80px;
+            background: rgba(229,9,20,.08);
+            animation-delay: -5s;
+        }
+
+        .orb-three {
+            width: 150px;
+            height: 150px;
+            left: 30%;
+            bottom: 4%;
+            background: rgba(255,255,255,.035);
+            animation-delay: -8s;
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translate3d(0,0,0);
+            }
+
+            50% {
+                transform: translate3d(25px,-35px,0);
+            }
+        }
+
+        .page {
+            width: min(92%,560px);
+            padding: 70px 0 55px;
+        }
+
+        .profile {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 42px;
+        }
+
+        .avatar-wrap {
+            position: relative;
+            width: 112px;
+            height: 112px;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -9px;
+            border: 1px solid rgba(229,9,20,.35);
+            border-radius: 50%;
+            animation: pulse-ring 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0%,100% {
+                transform: scale(1);
+                opacity: .45;
+            }
+
+            50% {
+                transform: scale(1.07);
+                opacity: .9;
+            }
+        }
+
+        .avatar {
+            width: 112px;
+            height: 112px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #191919,
+                    #080808
+                );
+
+            font-size: 42px;
+            font-weight: 800;
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.7),
+                inset 0 1px 0 rgba(255,255,255,.08);
+        }
+
+        .online {
+            position: absolute;
+            right: 2px;
+            bottom: 4px;
+
+            width: 22px;
+            height: 22px;
+
+            border: 4px solid var(--bg);
+            border-radius: 50%;
+
+            background: #27df70;
+
+            box-shadow:
+                0 0 20px rgba(39,223,112,.45);
+        }
+
+        .socials {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 14px;
+        }
+
+        .social {
+            position: relative;
+
+            height: 150px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            color: #fff;
+            text-decoration: none;
+
+            border: 1px solid var(--border);
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.065),
+                    rgba(255,255,255,.018)
+                );
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            transition:
+                transform .35s cubic-bezier(.2,.8,.2,1),
+                border-color .35s ease,
+                box-shadow .35s ease;
+        }
+
+        .social::before {
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            border-radius: 50%;
+
+            background: currentColor;
+
+            opacity: 0;
+            filter: blur(55px);
+
+            transition: opacity .35s ease;
+        }
+
+        .social::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.08),
+                    transparent 35%
+                );
+
+            opacity: .5;
+        }
+
+        .social:hover {
+            transform: translateY(-8px) scale(1.015);
+
+            border-color:
+                rgba(255,255,255,.18);
+
+            box-shadow:
+                0 25px 55px rgba(0,0,0,.45);
+        }
+
+        .social:hover::before {
+            opacity: .1;
+        }
+
+        .tiktok {
+            color: #fff;
+        }
+
+        .facebook {
+            color: #4c8dff;
+        }
+
+        .github {
+            color: #fff;
+        }
+
+        .discord {
+            color: #7289ff;
+        }
+
+        .social-icon {
+            position: relative;
+            z-index: 3;
+
+            width: 64px;
+            height: 64px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 19px;
+
+            background: rgba(255,255,255,.06);
+
+            font-size: 27px;
+
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.08),
+                0 12px 25px rgba(0,0,0,.25);
+
+            transition:
+                transform .35s ease,
+                background .35s ease;
+        }
+
+        .social:hover .social-icon {
+            transform: scale(1.12) rotate(-3deg);
+            background: rgba(255,255,255,.09);
+        }
+
+        .ripple {
+            position: absolute;
+            z-index: 2;
+
+            width: 0;
+            height: 0;
+
+            left: 50%;
+            top: 50%;
+
+            border-radius: 50%;
+
+            background: currentColor;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transform: translate(-50%,-50%);
+        }
+
+        .social.clicked {
+            animation:
+                card-click .55s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .social.clicked .social-icon {
+            animation:
+                icon-click .65s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .social.clicked .ripple {
+            animation:
+                ripple .65s ease-out forwards;
+        }
+
+        @keyframes card-click {
+            0% {
+                transform: scale(1);
+            }
+
+            30% {
+                transform: scale(.94);
+            }
+
+            60% {
+                transform: scale(1.035);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes icon-click {
+            0% {
+                transform: scale(1) rotate(0);
+            }
+
+            30% {
+                transform: scale(.75) rotate(-8deg);
+            }
+
+            60% {
+                transform: scale(1.25) rotate(8deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: .45;
+            }
+
+            100% {
+                width: 450px;
+                height: 450px;
+                opacity: 0;
+            }
+        }
+
+        .copy {
+            position: relative;
+
+            width: 100%;
+            height: 58px;
+
+            margin-top: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 18px;
+
+            color: #fff;
+            background: rgba(255,255,255,.035);
+
+            cursor: pointer;
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+        .copy::before {
+            content: "";
+
+            position: absolute;
+
+            width: 0;
+            height: 100%;
+
+            left: 50%;
+            top: 0;
+
+            background: rgba(229,9,20,.15);
+
+            transform: translateX(-50%);
+
+            transition: width .35s ease;
+        }
+
+        .copy:hover {
+            border-color: rgba(229,9,20,.35);
+            background: rgba(255,255,255,.055);
+        }
+
+        .copy:hover::before {
+            width: 100%;
+        }
+
+        .copy:active {
+            transform: scale(.97);
+        }
+
+        .copy i {
+            position: relative;
+            z-index: 2;
+
+            color: var(--red);
+            font-size: 18px;
+
+            transition: transform .3s ease;
+        }
+
+        .copy:hover i {
+            transform: rotate(-12deg) scale(1.1);
+        }
+
+        .line {
+            width: 60px;
+            height: 2px;
+
+            margin: 34px auto 0;
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--red),
+                    transparent
+                );
+
+            opacity: .5;
+        }
+
+        @media (max-width:520px) {
+
+            .page {
+                width: 91%;
+                padding-top: 48px;
+            }
+
+            .profile {
+                margin-bottom: 34px;
+            }
+
+            .avatar-wrap,
+            .avatar {
+                width: 94px;
+                height: 94px;
+            }
+
+            .avatar {
+                font-size: 36px;
+            }
+
+            .online {
+                width: 20px;
+                height: 20px;
+                right: 0;
+                bottom: 2px;
+            }
+
+            .socials {
+                gap: 10px;
+            }
+
+            .social {
+                height: 125px;
+                border-radius: 20px;
+            }
+
+            .social-icon {
+                width: 56px;
+                height: 56px;
+                border-radius: 16px;
+                font-size: 23px;
+            }
+
+            .copy {
+                height: 54px;
+                border-radius: 16px;
+            }
+        }
+
+        @media (max-width:350px) {
+
+            .page {
+                width: 94%;
+            }
+
+            .social {
+                height: 112px;
+            }
+
+            .social-icon {
+                width: 51px;
+                height: 51px;
+                font-size: 21px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background" aria-hidden="true">
+        <div class="grid"></div>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+    </div>
+
+    <main class="page">
+
+        <section class="profile">
+            <div class="avatar-wrap">
+                <div class="avatar-ring"></div>
+                <div class="avatar">J</div>
+                <span class="online" aria-label="Online"></span>
+            </div>
+        </section>
+
+        <nav class="socials" aria-label="Social media links">
+
+            <a
+                class="social tiktok"
+                href="https://www.tiktok.com/@http.quattro"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+            >
+                <span class="ripple"></span>
+
+                <span class="social-icon">
+                    <i class="fa-brands fa-tiktok"></i>
+                </span>
+            </a>
+
+            <a
+                class="social facebook"
+                href="https://www.facebook.com/share/1Gci6ciuGh/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+            >
+                <span class="ripple"></span>
+
+                <span class="social-icon">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </span>
+            </a>
+
+            <a
+                class="social github"
+                href="https://github.com/quattrodevv"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+            >
+                <span class="ripple"></span>
+
+                <span class="social-icon">
+                    <i class="fa-brands fa-github"></i>
+                </span>
+            </a>
+
+            <a
+                class="social discord"
+                href="https://discord.com/users/1261415056667836456"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Discord"
+            >
+                <span class="ripple"></span>
+
+                <span class="social-icon">
+                    <i class="fa-brands fa-discord"></i>
+                </span>
+            </a>
+
+        </nav>
+
+        <button
+            class="copy"
+            id="copyButton"
+            type="button"
+            aria-label="Copy page link"
+        >
+            <i class="fa-solid fa-link"></i>
+        </button>
+
+        <div class="line" aria-hidden="true"></div>
+
+    </main>
+
+    <script>
+        const socialLinks =
+            document.querySelectorAll(".social");
+
+        socialLinks.forEach((link) => {
+
+            link.addEventListener("click", (event) => {
+
+                event.preventDefault();
+
+                const destination = link.href;
+
+                link.classList.remove("clicked");
+
+                void link.offsetWidth;
+
+                link.classList.add("clicked");
+
+                setTimeout(() => {
+
+                    window.open(
+                        destination,
+                        "_blank",
+                        "noopener,noreferrer"
+                    );
+
+                }, 420);
+
+                setTimeout(() => {
+
+                    link.classList.remove("clicked");
+
+                }, 800);
+            });
+        });
+
+
+        const copyButton =
+            document.getElementById("copyButton");
+
+        copyButton.addEventListener(
+            "click",
+            async () => {
+
+                const original =
+                    copyButton.innerHTML;
+
+                const url =
+                    window.location.href;
+
+                try {
+
+                    if (
+                        navigator.clipboard &&
+                        window.isSecureContext
+                    ) {
+
+                        await navigator.clipboard.writeText(url);
+
+                    } else {
+
+                        const textarea =
+                            document.createElement("textarea");
+
+                        textarea.value = url;
+
+                        textarea.style.position = "fixed";
+                        textarea.style.opacity = "0";
+
+                        document.body.appendChild(textarea);
+
+                        textarea.focus();
+                        textarea.select();
+
+                        document.execCommand("copy");
+
+                        textarea.remove();
+                    }
+
+                    copyButton.innerHTML =
+                        '<i class="fa-solid fa-check"></i>';
+
+                } catch (error) {
+
+                    copyButton.innerHTML =
+                        '<i class="fa-solid fa-xmark"></i>';
+                }
+
+                setTimeout(() => {
+
+                    copyButton.innerHTML =
+                        original;
+
+                }, 1500);
+            }
+        );
+    </script>
+
+</body>
+</html>
